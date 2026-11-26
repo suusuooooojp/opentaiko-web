@@ -1,29 +1,20 @@
-# OpenTaiko Web / WASM
+# OpenTaiko Web port experiment
 
-Independent browser prototype for local TJA chart practice.
+Deployment currently serving the prototype:
 
-- Static site; deployable on Cloudflare Pages with no build step.
-- Build output directory: repository root (/).
-- TJA files are parsed locally in the browser.
-- No chart or audio upload to a server.
-- Touch controls and keyboard controls (F/J = Don, D/K = Ka).
+- https://opentaiko-web.rdgdtrdr.workers.dev/
 
-> This is an independent prototype, not an official OpenTaiko release or a complete port. Scoring, chart commands, branches, skins, and other game features are incomplete.
+**Important:** this is not a full OpenTaiko WebAssembly port. The current browser demo uses a separate hand-written interface and simplified TJA playback. It does not reuse OpenTaiko's original screens, skin/Lua pipeline, or runtime, so it does not yet satisfy the requirement to prohibit an independent UI.
 
-## Cloudflare Pages deployment
+See [PORTING_STATUS.md](./PORTING_STATUS.md) for the upstream compatibility findings, blockers, and the implementation sequence for a real browser port that reuses OpenTaiko's existing UI.
 
-Create a Pages project and connect this GitHub repository.
+Upstream project: https://github.com/0auBSQ/OpenTaiko
 
-- Project name: `opentaiko`
-- Production branch: `main`
-- Framework preset: `None`
-- Build command: leave empty
-- Build output directory: `/`
+## Current prototype
 
-Cloudflare Pages will publish the static files from the repository root. Every push to `main` will trigger a deployment.
+- Static browser page
+- Local TJA text parsing
+- Simplified note rendering and hit judgement
+- Touch and keyboard input
 
-## Run locally
-
-Open the repository through any static HTTP server.
-
-Original project: https://github.com/0auBSQ/OpenTaiko
+These are prototype-only features and must not be represented as full OpenTaiko functionality.
