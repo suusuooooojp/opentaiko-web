@@ -1,0 +1,30 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="theme-color" content="#111827">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="OpenTaiko Web">
+  <link rel="manifest" href="./manifest.webmanifest">
+  <link rel="icon" type="image/png" sizes="192x192" href="./icons/taiko-192.png">
+  <link rel="apple-touch-icon" href="./icons/taiko-192.png">
+  <meta name="description" content="OpenTaiko browser/WASM port experiment. Play your own TJA chart and audio locally.">
+  <title>OpenTaiko Web / WASM</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <main class="app-shell">
+    <header class="topbar"><div class="brand"><div class="brand-mark">太</div><div><div class="brand-title">OpenTaiko <span>WEB / WASM</span></div><div class="brand-sub">Browser port experiment · local files only</div></div></div><div class="wasm-state"><i id="wasmLed"></i><span id="wasmStatus" aria-live="polite">WASMを読み込み中</span></div></header>
+    <section class="panel setup-panel" id="setupPanel"><div class="section-heading"><div><div class="eyebrow">LOCAL SETUP</div><h1>譜面を読み込んで演奏</h1><p>譜面と音源は端末内で読み込みます。サーバーへアップロードしません。</p></div><div class="version-pill">WEB BUILD 0.2</div></div>
+    <div class="file-grid"><label class="file-card" for="tjaFile"><span class="file-icon">譜</span><span class="file-title">TJA譜面</span><span class="file-desc" id="tjaName">.tja ファイルを選択</span><input id="tjaFile" type="file" accept=".tja,text/plain"></label><label class="file-card" for="audioFile"><span class="file-icon audio-icon">♪</span><span class="file-title">音源ファイル</span><span class="file-desc" id="audioName">MP3 / WAV / M4A など</span><input id="audioFile" type="file" accept="audio/*,.wav,.mp3,.m4a,.aac,.ogg"></label></div>
+    <div class="settings-grid"><label class="field"><span>コース</span><select id="courseSelect" disabled><option>譜面を読み込んでください</option></select></label><label class="field"><span>再生速度 <b id="speedValue">1.0x</b></span><input id="speedRange" type="range" min="0.5" max="1.5" step="0.05" value="1"></label><label class="field"><span>譜面オフセット <b id="offsetValue">0 ms</b></span><input id="offsetRange" type="range" min="-500" max="500" step="5" value="0"></label><label class="field"><span>音量 <b id="volumeValue">80%</b></span><input id="volumeRange" type="range" min="0" max="1" step="0.05" value="0.8"></label></div>
+    <div class="setup-actions"><button class="primary-button" id="playButton" disabled>演奏スタート <span>▶</span></button><button class="secondary-button" id="demoButton">サンプル譜面で試す</button></div><p class="compat-note" id="loadMessage">TJA譜面を選択してください。音源を選ぶと曲に合わせて再生できます。</p></section>
+    <section class="game-panel panel" id="gamePanel" hidden><div class="game-toolbar"><div class="song-meta"><div class="eyebrow">NOW PLAYING</div><div class="song-title" id="songTitle">曲名</div><div class="song-subtitle" id="songInfo">COURSE · LEVEL</div></div><div class="toolbar-actions"><button class="icon-button" id="pauseButton" aria-label="一時停止">Ⅱ</button><button class="icon-button" id="backButton" aria-label="設定へ戻る">↩</button></div></div>
+    <div class="score-row"><div class="score-main"><span>スコア</span><strong id="scoreValue">0</strong></div><div class="stat"><span>コンボ</span><strong id="comboValue">0</strong></div><div class="stat"><span>最大</span><strong id="maxComboValue">0</strong></div><div class="stat"><span>良</span><strong id="greatValue">0</strong></div><div class="stat"><span>可</span><strong id="goodValue">0</strong></div><div class="stat"><span>不可</span><strong id="missValue">0</strong></div></div>
+    <div class="playfield-wrap"><canvas id="playfield" aria-label="太鼓の譜面"></canvas><div class="judgement" id="judgement" role="status" aria-live="polite">READY</div><div class="progress-track"><div id="progressBar"></div></div></div>
+    <div class="input-row"><button class="drum-button don-button" id="donButton"><span class="drum-kanji">ドン</span><small>F / J</small></button><button class="drum-button ka-button" id="kaButton"><span class="drum-kanji">カッ</span><small>D / K</small></button></div><div class="game-foot"><span>赤：ドン　青：カッ</span><span id="remainingValue">0 NOTES</span><span>譜面時計：WASM判定</span></div></section>
+    <footer class="footer"><span>Independent browser prototype · not an official OpenTaiko release</span><a href="https://github.com/0auBSQ/OpenTaiko" target="_blank" rel="noreferrer">OpenTaiko project ↗</a></footer>
+  </main><audio id="audio" preload="auto" playsinline></audio><script type="module" src="app.js"></script>
+</body></html>
