@@ -1,0 +1,25 @@
+name: Browser host checks
+
+on:
+  push:
+    branches:
+      - porting/no-custom-ui
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  host-syntax:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Check browser host module syntax
+        run: node --input-type=module --check < browser-host/host.js
+      - name: Verify host has no replacement game UI
+        run: |
+          test "$(grep -o '<canvas' browser-host/host.html | wc -l)" -eq 1
+          ! grep -Eiq '<(button|nav|main|section|form)' browser-host/host.html
+          ! grep -Eiq 'drawImage|fillText|strokeText' browser-host/host.js
